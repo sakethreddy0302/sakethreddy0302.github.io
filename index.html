@@ -54,6 +54,71 @@ body {
   min-height: 100vh;
 }
 
+/* ── MOBILE HEADER & OVERLAY ── */
+.mobile-header {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 60px;
+  background: var(--navy2);
+  border-bottom: 1px solid var(--border);
+  z-index: 150;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+.mobile-logo {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 1.1em;
+  color: var(--cream);
+}
+
+.hamburger-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 5px;
+}
+
+.hamburger-btn span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  background: var(--amber);
+  transition: transform 0.3s, opacity 0.3s;
+}
+
+.hamburger-btn.open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.hamburger-btn.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-btn.open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+  z-index: 180;
+  transition: opacity 0.3s;
+}
+
+.sidebar-overlay.visible {
+  display: block;
+}
+
 /* ── SIDEBAR ── */
 .sidebar {
   width: var(--sidebar-w);
@@ -65,7 +130,7 @@ body {
   display: flex;
   flex-direction: column;
   padding: 40px 30px;
-  z-index: 100;
+  z-index: 190;
   overflow-y: auto;
 }
 
@@ -211,22 +276,101 @@ section {
   border-radius: 50%;
 }
 
-#hero::after {
-  content: '';
-  position: absolute;
-  bottom: 60px; right: 70px;
-  width: 180px; height: 180px;
-  border: 1px solid var(--border);
-  border-radius: 50%;
+.hero-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+  width: 100%;
 }
 
-.hero-eyebrow {
+.hero-content {
+  flex: 1;
+}
+
+.hero-photo {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+}
+
+.photo-frame {
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid var(--border);
+  background: var(--navy2);
+  box-shadow: 0 12px 32px rgba(0,0,0,.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color .3s, transform .3s;
+}
+
+.photo-frame:hover {
+  border-color: var(--amber);
+  transform: scale(1.03);
+}
+
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-placeholder {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.availability-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(46, 204, 113, 0.1);
+  border: 1px solid rgba(46, 204, 113, 0.25);
+  color: #2ecc71;
+  padding: 6px 14px;
+  border-radius: 20px;
   font-family: var(--font-mono);
-  font-size: .72em;
-  letter-spacing: 4px;
-  color: var(--amber);
+  font-size: 0.72em;
+  font-weight: 500;
+  letter-spacing: 1px;
   text-transform: uppercase;
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  width: fit-content;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #2ecc71;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+}
+
+.pulse-dot::after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  background-color: #2ecc71;
+  border-radius: 50%;
+  position: absolute;
+  top: 0; left: 0;
+  animation: pulse 1.6s ease-in-out infinite;
+  opacity: 0.8;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.8; }
+  100% { transform: scale(2.8); opacity: 0; }
 }
 
 .hero-name {
@@ -303,18 +447,17 @@ section {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 28px;
-  transition: transform .25s, border-color .25s, box-shadow .25s;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-4px);
   border-color: var(--amber);
-  box-shadow: 0 12px 32px rgba(0,0,0,.35), 0 0 0 1px rgba(245,166,35,.2);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(245,166,35,.2);
 }
 
 /* ── EXPERIENCE ── */
 .exp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; }
-
 .exp-card { position: relative; }
 
 .exp-badge {
@@ -350,8 +493,6 @@ section {
 /* ── EDUCATION ── */
 .edu-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
 
-.edu-card {}
-
 .edu-score {
   font-family: var(--font-mono);
   font-size: 1.8em;
@@ -359,6 +500,16 @@ section {
   color: var(--amber);
   line-height: 1;
   margin-bottom: 8px;
+  display: flex;
+  align-items: baseline;
+}
+
+.edu-scale {
+  font-size: 0.45em;
+  font-family: var(--font-head);
+  color: var(--slate);
+  font-weight: 500;
+  margin-left: 4px;
 }
 
 .edu-inst {
@@ -381,15 +532,36 @@ section {
   gap: 22px;
 }
 
-.proj-card {}
+.proj-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
 
 .proj-num {
   font-family: var(--font-mono);
-  font-size: .65em;
+  font-size: .8em;
   color: var(--muted);
-  letter-spacing: 2px;
-  margin-bottom: 12px;
-  display: block;
+  font-weight: 700;
+}
+
+.proj-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tech-tag {
+  font-family: var(--font-mono);
+  font-size: 0.62em;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--amber);
+  background: rgba(245, 166, 35, 0.08);
+  border: 1px solid rgba(245, 166, 35, 0.15);
+  padding: 3px 8px;
+  border-radius: 4px;
 }
 
 .proj-title {
@@ -407,6 +579,12 @@ section {
   margin-bottom: 18px;
 }
 
+.proj-links {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
 .proj-link {
   font-family: var(--font-mono);
   font-size: .72em;
@@ -422,14 +600,19 @@ section {
 .proj-link:hover { gap: 10px; }
 .proj-link::after { content: '→'; }
 
+.proj-link.demo-link {
+  color: var(--cream);
+}
+.proj-link.demo-link:hover {
+  color: var(--amber);
+}
+
 /* ── SKILLS ── */
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
-
-.skill-box {}
 
 .skill-box h3 {
   font-size: .8em;
@@ -460,13 +643,12 @@ section {
 }
 .tag:hover {
   background: rgba(245,166,35,.15);
+  border-color: var(--amber);
   color: var(--cream);
 }
 
 /* ── LEADERSHIP ── */
 .lead-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
-
-.lead-card {}
 
 .lead-title {
   font-size: 1em;
@@ -510,15 +692,20 @@ section {
 
 .cert-icon {
   width: 48px; height: 48px;
-  background: rgba(245,166,35,.1);
+  background: var(--navy3);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   display: flex; align-items: center; justify-content: center;
-  font-size: 1.4em;
   flex-shrink: 0;
+  overflow: hidden;
+  padding: 6px;
 }
 
-.cert-body {}
+.cert-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
 
 .cert-name {
   font-size: .88em;
@@ -579,6 +766,13 @@ section {
   margin-bottom: 6px;
 }
 
+.email-val {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
 .contact-val a {
   font-size: .88em;
   color: var(--slate);
@@ -586,6 +780,46 @@ section {
   transition: color .2s;
 }
 .contact-val a:hover { color: var(--amber); }
+
+.copy-btn {
+  background: transparent;
+  border: none;
+  color: var(--slate);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .2s;
+}
+.copy-btn:hover {
+  color: var(--amber);
+  background: rgba(245,166,35,.08);
+}
+.copy-btn .tooltip {
+  visibility: hidden;
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--navy3);
+  color: var(--cream);
+  text-align: center;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.7em;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s;
+  border: 1px solid var(--border);
+  z-index: 10;
+}
+.copy-btn:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
+}
 
 /* ── FOOTER ── */
 footer {
@@ -608,37 +842,45 @@ footer {
 }
 
 @media (max-width: 768px) {
+  .mobile-header {
+    display: flex;
+  }
   .sidebar {
     position: fixed; left: -260px; transition: left .3s;
     width: 240px;
+    top: 0;
+    height: 100vh;
+    z-index: 200;
   }
   .sidebar.open { left: 0; }
-  main { margin-left: 0; }
-  .mobile-toggle {
-    display: flex;
-    position: fixed; top: 18px; left: 18px; z-index: 200;
-    background: var(--navy2);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 10px;
-    cursor: pointer;
-    flex-direction: column;
-    gap: 4px;
-  }
-  .mobile-toggle span {
-    display: block; width: 20px; height: 2px; background: var(--amber);
-  }
+  main { margin-left: 0; padding-top: 60px; }
+  
   section { padding: 60px 24px; }
+  
+  .hero-container {
+    flex-direction: column-reverse;
+    gap: 35px;
+    text-align: center;
+  }
+  .hero-photo {
+    margin-bottom: 10px;
+  }
+  .photo-frame {
+    width: 200px;
+    height: 200px;
+  }
+  .availability-badge {
+    margin: 0 auto 24px;
+  }
   .hero-name { font-size: 2.2em; }
+  .hero-tagline, .hero-desc { margin-left: auto; margin-right: auto; }
+  .btn-group { justify-content: center; }
+
   .exp-grid, .edu-grid, .proj-grid, .skills-grid, .lead-grid, .cert-grid, .contact-grid {
     grid-template-columns: 1fr;
   }
   footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
   #hero::after { display: none; }
-}
-
-@media (min-width: 769px) {
-  .mobile-toggle { display: none; }
 }
 
 /* scrollbar */
@@ -671,10 +913,18 @@ footer {
 </head>
 <body>
 
-<!-- Mobile toggle -->
-<button class="mobile-toggle" id="mobile-toggle" aria-label="Open menu">
-  <span></span><span></span><span></span>
-</button>
+<!-- Sticky Mobile Top Bar -->
+<header class="mobile-header">
+  <div class="mobile-logo">Saketh Reddy</div>
+  <button class="hamburger-btn" id="hamburger-btn" aria-label="Toggle Navigation">
+    <span></span>
+    <span></span>
+    <span></span>
+  </button>
+</header>
+
+<!-- Overlay Backdrop for Mobile Sidebar -->
+<div class="sidebar-overlay" id="sidebar-overlay"></div>
 
 <div class="layout">
   <!-- SIDEBAR -->
@@ -707,16 +957,30 @@ footer {
 
     <!-- HERO -->
     <section id="hero">
-      <div class="hero-eyebrow">Available for opportunities</div>
-      <h1 class="hero-name">
-        Hi, I'm<br>
-        <span class="highlight" id="typed-name"></span><span class="cursor"></span>
-      </h1>
-      <p class="hero-tagline">Electronics &amp; Computer Engineering Graduate specializing in AI/ML, Backend Development &amp; Cloud Architecture.</p>
-      <p class="hero-desc">Motivated by solving hard problems at the intersection of hardware and software. Committed to building efficient, reliable systems using emerging technologies.</p>
-      <div class="btn-group">
-        <a href="#contact" class="btn btn-primary">Get In Touch</a>
-        <a href="#cybersecurity" class="btn btn-outline">View Projects</a>
+      <div class="hero-container">
+        <div class="hero-content">
+          <div class="availability-badge">
+            <span class="pulse-dot"></span> Available for opportunities
+          </div>
+          <h1 class="hero-name">
+            Hi, I'm<br>
+            <span class="highlight" id="typed-name"></span><span class="cursor"></span>
+          </h1>
+          <p class="hero-tagline">Electronics &amp; Computer Engineering Graduate specializing in AI/ML, Backend Development &amp; Cloud Architecture.</p>
+          <p class="hero-desc">Motivated by solving hard problems at the intersection of hardware and software. Committed to building efficient, reliable systems using emerging technologies.</p>
+          <div class="btn-group">
+            <a href="assets/Saketh_Resume.pdf" download="Saketh_Resume.pdf" class="btn btn-primary">📄 Download Resume</a>
+            <a href="#contact" class="btn btn-outline">Get In Touch</a>
+          </div>
+        </div>
+        <div class="hero-photo">
+          <div class="photo-frame">
+            <img src="assets/profile.jpg" alt="Dagada Saketh Vardhan Reddy" class="hero-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <div class="hero-placeholder">
+              <svg viewBox="0 0 24 24" width="64" height="64" stroke="var(--amber)" stroke-width="1.2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -746,17 +1010,17 @@ footer {
       <h2 class="section-title">Education &amp; <span>Overview</span></h2>
       <div class="edu-grid">
         <div class="card edu-card fade-in">
-          <div class="edu-score">6.79</div>
+          <div class="edu-score">6.79 <span class="edu-scale">/ 10.0 CGPA</span></div>
           <div class="edu-inst">Amrita Vishwa Vidyapeetham</div>
           <div class="edu-degree">B.Tech in Electronics &amp; Computer Engineering · 2020–2024</div>
         </div>
         <div class="card edu-card fade-in">
-          <div class="edu-score">8.54</div>
+          <div class="edu-score">8.54 <span class="edu-scale">/ 10.0 CGPA</span></div>
           <div class="edu-inst">Narayana Junior College</div>
           <div class="edu-degree">Intermediate MPC · 2018–2020</div>
         </div>
         <div class="card edu-card fade-in">
-          <div class="edu-score">9.20</div>
+          <div class="edu-score">9.20 <span class="edu-scale">/ 10.0 CGPA</span></div>
           <div class="edu-inst">Narayana EM High School</div>
           <div class="edu-degree">High School · 2018</div>
         </div>
@@ -769,16 +1033,34 @@ footer {
       <h2 class="section-title">Cybersecurity <span>Projects</span></h2>
       <div class="proj-grid">
         <div class="card proj-card fade-in">
-          <span class="proj-num">01 / Python · Asyncio · Security</span>
+          <div class="proj-header">
+            <span class="proj-num">01</span>
+            <div class="proj-tech">
+              <span class="tech-tag">Python</span>
+              <span class="tech-tag">Asyncio</span>
+              <span class="tech-tag">Security</span>
+            </div>
+          </div>
           <div class="proj-title">Automated Vulnerability &amp; Recon Scanner (AVRS)</div>
           <p class="proj-desc">An asynchronous network reconnaissance and vulnerability scanning tool built in Python. Features high-performance port scanning, service banner grabbing, passive DNS security audits, directory fuzzing, and version-to-CVE correlation mapping.</p>
-          <a href="https://github.com/sakethreddy0302/vuln_scanner" target="_blank" class="proj-link">View on GitHub</a>
+          <div class="proj-links">
+            <a href="https://github.com/sakethreddy0302/vuln_scanner" target="_blank" class="proj-link">View on GitHub</a>
+          </div>
         </div>
         <div class="card proj-card fade-in">
-          <span class="proj-num">02 / Python · Stateful DPI · Intrusion Detection</span>
+          <div class="proj-header">
+            <span class="proj-num">02</span>
+            <div class="proj-tech">
+              <span class="tech-tag">Python</span>
+              <span class="tech-tag">Stateful DPI</span>
+              <span class="tech-tag">Intrusion Detection</span>
+            </div>
+          </div>
           <div class="proj-title">Network Packet Analyzer &amp; Intrusion Detection System (IDS)</div>
           <p class="proj-desc">A modular, high-performance defensive security tool that decodes multi-layer network protocols (Ethernet, IP, TCP/UDP, DNS, HTTP) from live interfaces or PCAP streams. Implements real-time deep packet inspection (DPI) signatures to alert on port scans, cleartext credentials leaks, brute-force logins, and DNS tunneling exfiltration via Shannon Entropy auditing.</p>
-          <a href="https://github.com/sakethreddy0302/net_ids" target="_blank" class="proj-link">View on GitHub</a>
+          <div class="proj-links">
+            <a href="https://github.com/sakethreddy0302/net_ids" target="_blank" class="proj-link">View on GitHub</a>
+          </div>
         </div>
       </div>
     </section>
@@ -789,40 +1071,92 @@ footer {
       <h2 class="section-title">University <span>Projects</span></h2>
       <div class="proj-grid">
         <div class="card proj-card fade-in">
-          <span class="proj-num">01 / Python · NLP · ML</span>
+          <div class="proj-header">
+            <span class="proj-num">01</span>
+            <div class="proj-tech">
+              <span class="tech-tag">Python</span>
+              <span class="tech-tag">NLP</span>
+              <span class="tech-tag">ML</span>
+            </div>
+          </div>
           <div class="proj-title">Virtual Voice Assistant (Jenny)</div>
           <p class="proj-desc">A full-featured voice assistant with robust NLU for diverse queries, a task management module, and smart home API integrations to enhance user productivity.</p>
-          <a href="https://github.com/sakethreddy0302/music-generation-using-genetic-algorithm" target="_blank" class="proj-link">View on GitHub</a>
+          <div class="proj-links">
+            <a href="https://github.com/sakethreddy0302/Virtual-Voice-Assistant-Jenny" target="_blank" class="proj-link">View on GitHub</a>
+          </div>
         </div>
         <div class="card proj-card fade-in">
-          <span class="proj-num">02 / JS · Firebase · Tailwind</span>
+          <div class="proj-header">
+            <span class="proj-num">02</span>
+            <div class="proj-tech">
+              <span class="tech-tag">JS</span>
+              <span class="tech-tag">Firebase</span>
+              <span class="tech-tag">Tailwind</span>
+            </div>
+          </div>
           <div class="proj-title">Real-Time Machine Health Dashboard</div>
           <p class="proj-desc">Secure real-time dashboard with Custom Token Authentication monitoring 36 factory devices, displaying live status alerts and historical trend data.</p>
-          <a href="https://github.com/sakethreddy0302/Real-Time-Global-Machine-Health-Dashboard" target="_blank" class="proj-link">View on GitHub</a>
+          <div class="proj-links">
+            <a href="https://github.com/sakethreddy0302/Real-Time-Global-Machine-Health-Dashboard" target="_blank" class="proj-link">View on GitHub</a>
+            <a href="https://sakethreddy0302.github.io/Real-Time-Global-Machine-Health-Dashboard/" target="_blank" class="proj-link demo-link">Live Demo</a>
+          </div>
         </div>
         <div class="card proj-card fade-in">
-          <span class="proj-num">03 / Arduino · IoT · Bluetooth</span>
+          <div class="proj-header">
+            <span class="proj-num">03</span>
+            <div class="proj-tech">
+              <span class="tech-tag">Arduino</span>
+              <span class="tech-tag">IoT</span>
+              <span class="tech-tag">Bluetooth</span>
+            </div>
+          </div>
           <div class="proj-title">Hand Gesture Controlled Car</div>
           <p class="proj-desc">Hands-free vehicle manipulation using Arduino, Bluetooth, and MPU6050, prioritizing real-time gesture recognition over conventional computer vision.</p>
-          <a href="https://github.com/sakethreddy0302/Hand-Gesture-car" target="_blank" class="proj-link">View on GitHub</a>
+          <div class="proj-links">
+            <a href="https://github.com/sakethreddy0302/Hand-Gesture-car" target="_blank" class="proj-link">View on GitHub</a>
+          </div>
         </div>
         <div class="card proj-card fade-in">
-          <span class="proj-num">04 / Python · Deep Learning</span>
+          <div class="proj-header">
+            <span class="proj-num">04</span>
+            <div class="proj-tech">
+              <span class="tech-tag">Python</span>
+              <span class="tech-tag">Deep Learning</span>
+            </div>
+          </div>
           <div class="proj-title">Brain Tumour Detection</div>
           <p class="proj-desc">A Python-based classification system that identifies brain MRI images, determining whether a tumour is present using convolutional neural networks.</p>
-          <a href="https://github.com/sakethreddy0302/Brain-tumor-detction" target="_blank" class="proj-link">View on GitHub</a>
+          <div class="proj-links">
+            <a href="https://github.com/sakethreddy0302/Brain-tumor-detction" target="_blank" class="proj-link">View on GitHub</a>
+          </div>
         </div>
         <div class="card proj-card fade-in">
-          <span class="proj-num">05 / ML · NLP</span>
+          <div class="proj-header">
+            <span class="proj-num">05</span>
+            <div class="proj-tech">
+              <span class="tech-tag">ML</span>
+              <span class="tech-tag">NLP</span>
+            </div>
+          </div>
           <div class="proj-title">Sentiment Analysis: IMDB Reviews</div>
           <p class="proj-desc">A reliable sentiment analysis tool for IMDb reviews that captures diverse emotional responses via machine learning for accurate, nuanced prediction.</p>
-          <a href="https://github.com/sakethreddy0302/Classification-of-IMDB-movie-reviews-Sentiment-Analysis" target="_blank" class="proj-link">View on GitHub</a>
+          <div class="proj-links">
+            <a href="https://github.com/sakethreddy0302/Classification-of-IMDB-movie-reviews-Sentiment-Analysis" target="_blank" class="proj-link">View on GitHub</a>
+          </div>
         </div>
         <div class="card proj-card fade-in">
-          <span class="proj-num">06 / Python · Genetic Algorithm</span>
+          <div class="proj-header">
+            <span class="proj-num">06</span>
+            <div class="proj-tech">
+              <span class="tech-tag">Python</span>
+              <span class="tech-tag">Genetic Algorithm</span>
+            </div>
+          </div>
           <div class="proj-title">Music Generation via Genetic Algorithm</div>
           <p class="proj-desc">Leverages evolutionary principles — genetic operations and fitness evaluation — to create diverse musical compositions, addressing scalability and subjective assessment.</p>
-          <a href="https://github.com/sakethreddy0302/music-generation-using-genetic-algorithm" target="_blank" class="proj-link">View on GitHub</a>
+          <div class="proj-links">
+            <a href="https://github.com/sakethreddy0302/music-generation-using-genetic-algorithm" target="_blank" class="proj-link">View on GitHub</a>
+          </div>
         </div>
       </div>
     </section>
@@ -941,73 +1275,73 @@ footer {
     </section>
 
     <!-- CERTIFICATIONS -->
-<section id="certifications">
-  <div class="eyebrow">Credentials</div>
-  <h2 class="section-title">Key <span>Certifications</span></h2>
-  <div class="cert-grid">
+    <section id="certifications">
+      <div class="eyebrow">Credentials</div>
+      <h2 class="section-title">Key <span>Certifications</span></h2>
+      <div class="cert-grid">
 
-    <div class="card cert-card fade-in">
-      <div class="cert-icon">
-        <img src="assets/U-M_Logo-Hex.png" alt="University of Michigan" style="width:40px;height:40px;object-fit:contain;">
-      </div>
-      <div class="cert-body">
-        <div class="cert-name">Python Data Structures</div>
-        <a href="https://coursera.org/share/008d6388d79176f228849d01c2cf4056" target="_blank" class="cert-link-sm">View Certificate ↗</a>
-      </div>
-    </div>
+        <div class="card cert-card fade-in">
+          <div class="cert-icon">
+            <img src="assets/U-M_Logo-Hex.png" alt="University of Michigan">
+          </div>
+          <div class="cert-body">
+            <div class="cert-name">Python Data Structures</div>
+            <a href="https://coursera.org/share/008d6388d79176f228849d01c2cf4056" target="_blank" class="cert-link-sm">View Certificate ↗</a>
+          </div>
+        </div>
 
-    <div class="card cert-card fade-in">
-      <div class="cert-icon">
-        <img src="assets/images.png" alt="SQL Badge" style="width:40px;height:40px;object-fit:contain;">
-      </div>
-      <div class="cert-body">
-        <div class="cert-name">The Structured Query Language (SQL)</div>
-        <a href="https://coursera.org/share/b88c5a0f7751a65a3d8efa1dc6e35561" target="_blank" class="cert-link-sm">View Certificate ↗</a>
-      </div>
-    </div>
+        <div class="card cert-card fade-in">
+          <div class="cert-icon">
+            <img src="assets/images.png" alt="SQL Badge">
+          </div>
+          <div class="cert-body">
+            <div class="cert-name">The Structured Query Language (SQL)</div>
+            <a href="https://coursera.org/share/b88c5a0f7751a65a3d8efa1dc6e35561" target="_blank" class="cert-link-sm">View Certificate ↗</a>
+          </div>
+        </div>
 
-    <div class="card cert-card fade-in">
-      <div class="cert-icon">
-        <img src="assets/ibm.jpeg" alt="IBM Badge" style="width:40px;height:40px;object-fit:contain;">
-      </div>
-      <div class="cert-body">
-        <div class="cert-name">Intro to Cybersecurity Essentials</div>
-        <a href="https://coursera.org/share/fc5fed7cac6785a661aacce2cdd54985" target="_blank" class="cert-link-sm">View Certificate ↗</a>
-      </div>
-    </div>
+        <div class="card cert-card fade-in">
+          <div class="cert-icon">
+            <img src="assets/ibm.jpeg" alt="IBM Badge">
+          </div>
+          <div class="cert-body">
+            <div class="cert-name">Intro to Cybersecurity Essentials</div>
+            <a href="https://coursera.org/share/fc5fed7cac6785a661aacce2cdd54985" target="_blank" class="cert-link-sm">View Certificate ↗</a>
+          </div>
+        </div>
 
-    <div class="card cert-card fade-in">
-      <div class="cert-icon">
-        <img src="assets/tata.png" alt="Tata Badge" style="width:40px;height:40px;object-fit:contain;">
-      </div>
-      <div class="cert-body">
-        <div class="cert-name">Cybersecurity Analyst Job Simulation</div>
-        <span class="cert-link-sm" style="color:var(--muted)">Tata Group</span>
-      </div>
-    </div>
+        <div class="card cert-card fade-in">
+          <div class="cert-icon">
+            <img src="assets/tata.png" alt="Tata Badge">
+          </div>
+          <div class="cert-body">
+            <div class="cert-name">Cybersecurity Analyst Job Simulation</div>
+            <span class="cert-link-sm" style="color:var(--muted)">Tata Group</span>
+          </div>
+        </div>
 
-    <div class="card cert-card fade-in">
-      <div class="cert-icon">
-        <img src="assets/deloitte.png" alt="Deloitte Badge" style="width:40px;height:40px;object-fit:contain;">
-      </div>
-      <div class="cert-body">
-        <div class="cert-name">Technology Job Simulation</div>
-        <span class="cert-link-sm" style="color:var(--muted)">Deloitte</span>
-      </div>
-    </div>
+        <div class="card cert-card fade-in">
+          <div class="cert-icon">
+            <img src="assets/deloitte.png" alt="Deloitte Badge">
+          </div>
+          <div class="cert-body">
+            <div class="cert-name">Technology Job Simulation</div>
+            <span class="cert-link-sm" style="color:var(--muted)">Deloitte</span>
+          </div>
+        </div>
 
-    <div class="card cert-card fade-in">
-      <div class="cert-icon">
-        <img src="assets/AWS.png" alt="AWS Badge" style="width:40px;height:40px;object-fit:contain;">
-      </div>
-      <div class="cert-body">
-        <div class="cert-name">Solutions Architecture</div>
-        <span class="cert-link-sm" style="color:var(--muted)">Amazon Web Services</span>
-      </div>
-    </div>
+        <div class="card cert-card fade-in">
+          <div class="cert-icon">
+            <img src="assets/AWS.png" alt="AWS Badge">
+          </div>
+          <div class="cert-body">
+            <div class="cert-name">Solutions Architecture</div>
+            <span class="cert-link-sm" style="color:var(--muted)">Amazon Web Services</span>
+          </div>
+        </div>
 
-  </div>
-</section>
+      </div>
+    </section>
 
     <!-- PUBLICATIONS -->
     <section id="publications">
@@ -1028,7 +1362,13 @@ footer {
         <div class="card contact-card fade-in">
           <div class="contact-icon-wrap">📧</div>
           <div class="contact-label">Email</div>
-          <div class="contact-val"><a href="mailto:sakethdagada@gmail.com">sakethdagada@gmail.com</a></div>
+          <div class="contact-val email-val">
+            <a href="mailto:sakethdagada@gmail.com" id="email-link">sakethdagada@gmail.com</a>
+            <button class="copy-btn" onclick="copyEmail(this)" aria-label="Copy email to clipboard">
+              <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="copy-icon"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span class="tooltip">Copy</span>
+            </button>
+          </div>
         </div>
         <div class="card contact-card fade-in">
           <div class="contact-icon-wrap">💼</div>
@@ -1080,17 +1420,39 @@ themeBtn.addEventListener('click', () => {
   localStorage.setItem('theme', next);
 });
 
-/* ── MOBILE SIDEBAR ── */
+/* ── MOBILE SIDEBAR & DRAWER ── */
 const sidebar = document.getElementById('sidebar');
-const mobileToggle = document.getElementById('mobile-toggle');
-mobileToggle.addEventListener('click', () => sidebar.classList.toggle('open'));
-document.addEventListener('click', e => {
-  if (!sidebar.contains(e.target) && !mobileToggle.contains(e.target)) sidebar.classList.remove('open');
+const hamburgerBtn = document.getElementById('hamburger-btn');
+const overlay = document.getElementById('sidebar-overlay');
+
+function toggleSidebar() {
+  sidebar.classList.toggle('open');
+  hamburgerBtn.classList.toggle('open');
+  overlay.classList.toggle('visible');
+}
+
+hamburgerBtn.addEventListener('click', toggleSidebar);
+overlay.addEventListener('click', toggleSidebar);
+
+// Close sidebar when clicking any navigation link on mobile
+document.querySelectorAll('nav a').forEach(link => {
+  link.addEventListener('click', () => {
+    if (sidebar.classList.contains('open')) {
+      toggleSidebar();
+    }
+  });
 });
 
-/* ── ACTIVE NAV ── */
+/* ── ACTIVE NAV WITH INTERSECTION OBSERVER ── */
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('nav a');
+
+const observerOptions = {
+  root: null,
+  rootMargin: "-25% 0px -55% 0px",
+  threshold: 0
+};
+
 const observer = new IntersectionObserver(entries => {
   entries.forEach(e => {
     if (e.isIntersecting) {
@@ -1099,8 +1461,21 @@ const observer = new IntersectionObserver(entries => {
       if (link) link.classList.add('active');
     }
   });
-}, { threshold: 0.35 });
+}, observerOptions);
+
 sections.forEach(s => observer.observe(s));
+
+/* ── COPY EMAIL TO CLIPBOARD ── */
+function copyEmail(button) {
+  const emailText = document.getElementById('email-link').textContent;
+  navigator.clipboard.writeText(emailText).then(() => {
+    const tooltip = button.querySelector('.tooltip');
+    tooltip.textContent = 'Copied!';
+    setTimeout(() => {
+      tooltip.textContent = 'Copy';
+    }, 2000);
+  });
+}
 
 /* ── FADE IN ── */
 const fader = new IntersectionObserver(entries => {
