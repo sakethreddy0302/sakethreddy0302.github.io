@@ -200,6 +200,17 @@ nav a .nav-dot {
   flex-shrink: 0;
 }
 
+nav a.nav-sec-ops {
+  color: #00ff66 !important;
+  font-family: var(--font-mono);
+  border: 1px solid rgba(0, 255, 102, 0.3) !important;
+  background: rgba(0, 255, 102, 0.05) !important;
+}
+
+nav a.nav-sec-ops:hover {
+  background: rgba(0, 255, 102, 0.15) !important;
+}
+
 .sidebar-footer {
   margin-top: auto;
   padding-top: 30px;
@@ -265,7 +276,6 @@ section {
   padding: 80px 70px;
 }
 
-/* Diagonal accent */
 #hero::before {
   content: '';
   position: absolute;
@@ -284,9 +294,7 @@ section {
   width: 100%;
 }
 
-.hero-content {
-  flex: 1;
-}
+.hero-content { flex: 1; }
 
 .hero-photo {
   flex-shrink: 0;
@@ -416,7 +424,9 @@ section {
   text-decoration: none;
   transition: all .2s;
   letter-spacing: .3px;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .btn-primary {
@@ -438,6 +448,32 @@ section {
 .btn-outline:hover {
   border-color: var(--amber);
   color: var(--amber);
+  transform: translateY(-2px);
+}
+
+.terminal-link {
+  padding: 13px 28px;
+  border-radius: var(--radius);
+  font-size: .9em;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all .2s;
+  letter-spacing: .3px;
+  display: inline-flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  align-items: center;
+  gap: 8px;
+  background: #000000;
+  color: #00ff66;
+  border: 2px solid #00ff66;
+  font-family: var(--font-mono);
+  box-shadow: 0 0 10px rgba(0, 255, 102, 0.15);
+}
+.terminal-link:hover {
+  background: #00ff66;
+  color: #000000;
+  box-shadow: 0 0 18px rgba(0, 255, 102, 0.4);
   transform: translateY(-2px);
 }
 
@@ -596,6 +632,7 @@ section {
   align-items: center;
   gap: 6px;
   transition: gap .2s;
+  cursor: pointer;
 }
 .proj-link:hover { gap: 10px; }
 .proj-link::after { content: '→'; }
@@ -722,9 +759,7 @@ section {
 .cert-link-sm:hover { text-decoration: underline; }
 
 /* ── PUBLICATIONS ── */
-.pub-card {
-  max-width: 720px;
-}
+.pub-card { max-width: 720px; }
 
 .pub-title {
   font-size: 1.15em;
@@ -743,9 +778,7 @@ section {
 /* ── CONTACT ── */
 .contact-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 
-.contact-card {
-  text-align: center;
-}
+.contact-card { text-align: center; }
 
 .contact-icon-wrap {
   width: 52px; height: 52px;
@@ -842,45 +875,25 @@ footer {
 }
 
 @media (max-width: 768px) {
-  .mobile-header {
-    display: flex;
-  }
+  .mobile-header { display: flex; }
   .sidebar {
     position: fixed; left: -260px; transition: left .3s;
-    width: 240px;
-    top: 0;
-    height: 100vh;
-    z-index: 200;
+    width: 240px; top: 0; height: 100vh; z-index: 200;
   }
   .sidebar.open { left: 0; }
   main { margin-left: 0; padding-top: 60px; }
-  
   section { padding: 60px 24px; }
-  
-  .hero-container {
-    flex-direction: column-reverse;
-    gap: 35px;
-    text-align: center;
-  }
-  .hero-photo {
-    margin-bottom: 10px;
-  }
-  .photo-frame {
-    width: 200px;
-    height: 200px;
-  }
-  .availability-badge {
-    margin: 0 auto 24px;
-  }
+  .hero-container { flex-direction: column-reverse; gap: 35px; text-align: center; }
+  .hero-photo { margin-bottom: 10px; }
+  .photo-frame { width: 200px; height: 200px; }
+  .availability-badge { margin: 0 auto 24px; }
   .hero-name { font-size: 2.2em; }
   .hero-tagline, .hero-desc { margin-left: auto; margin-right: auto; }
   .btn-group { justify-content: center; }
-
   .exp-grid, .edu-grid, .proj-grid, .skills-grid, .lead-grid, .cert-grid, .contact-grid {
     grid-template-columns: 1fr;
   }
   footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
-  #hero::after { display: none; }
 }
 
 /* scrollbar */
@@ -945,6 +958,7 @@ footer {
         <li><a href="#certifications"><span class="nav-dot"></span>Certifications</a></li>
         <li><a href="#publications"><span class="nav-dot"></span>Publications</a></li>
         <li><a href="#contact"><span class="nav-dot"></span>Contact</a></li>
+        <li><a href="https://sakethreddy0302.github.io/sec-ops.html" class="nav-sec-ops"><span class="nav-dot"></span>&gt;_ SEC_SHELL</a></li>
       </ul>
     </nav>
     <div class="sidebar-footer">
@@ -970,6 +984,7 @@ footer {
           <p class="hero-desc">Motivated by solving hard problems at the intersection of hardware and software. Committed to building efficient, reliable systems using emerging technologies.</p>
           <div class="btn-group">
             <a href="assets/Saketh_Resume.pdf" download="Saketh_Resume.pdf" class="btn btn-primary">📄 Download Resume</a>
+            <a href="https://sakethreddy0302.github.io/sec-ops.html" class="terminal-link" id="hero-sec-ops">[ &gt;_ SEC_SHELL ]</a>
             <a href="#contact" class="btn btn-outline">Get In Touch</a>
           </div>
         </div>
@@ -1045,6 +1060,7 @@ footer {
           <p class="proj-desc">An asynchronous network reconnaissance and vulnerability scanning tool built in Python. Features high-performance port scanning, service banner grabbing, passive DNS security audits, directory fuzzing, and version-to-CVE correlation mapping.</p>
           <div class="proj-links">
             <a href="https://github.com/sakethreddy0302/vuln_scanner" target="_blank" class="proj-link">View on GitHub</a>
+            <a href="https://sakethreddy0302.github.io/sec-ops.html" target="_blank" class="proj-link demo-link">Launch Terminal</a>
           </div>
         </div>
         <div class="card proj-card fade-in">
@@ -1060,6 +1076,7 @@ footer {
           <p class="proj-desc">A modular, high-performance defensive security tool that decodes multi-layer network protocols (Ethernet, IP, TCP/UDP, DNS, HTTP) from live interfaces or PCAP streams. Implements real-time deep packet inspection (DPI) signatures to alert on port scans, cleartext credentials leaks, brute-force logins, and DNS tunneling exfiltration via Shannon Entropy auditing.</p>
           <div class="proj-links">
             <a href="https://github.com/sakethreddy0302/net_ids" target="_blank" class="proj-link">View on GitHub</a>
+            <a href="https://sakethreddy0302.github.io/sec-ops.html" target="_blank" class="proj-link demo-link">Launch Terminal</a>
           </div>
         </div>
       </div>
@@ -1434,7 +1451,6 @@ function toggleSidebar() {
 hamburgerBtn.addEventListener('click', toggleSidebar);
 overlay.addEventListener('click', toggleSidebar);
 
-// Close sidebar when clicking any navigation link on mobile
 document.querySelectorAll('nav a').forEach(link => {
   link.addEventListener('click', () => {
     if (sidebar.classList.contains('open')) {
@@ -1445,7 +1461,7 @@ document.querySelectorAll('nav a').forEach(link => {
 
 /* ── ACTIVE NAV WITH INTERSECTION OBSERVER ── */
 const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('nav a');
+const navLinks = document.querySelectorAll('nav a[href^="#"]');
 
 const observerOptions = {
   root: null,
@@ -1482,6 +1498,20 @@ const fader = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
 }, { threshold: 0.1 });
 document.querySelectorAll('.fade-in').forEach(el => fader.observe(el));
+
+/* ── BACK NAVIGATION / BFCACHE RESTORATION ── */
+function forceRestoreUI() {
+  document.querySelectorAll('.fade-in').forEach(el => el.classList.add('visible'));
+  const heroBtn = document.getElementById('hero-sec-ops');
+  if (heroBtn) {
+    heroBtn.style.display = 'inline-flex';
+    heroBtn.style.visibility = 'visible';
+    heroBtn.style.opacity = '1';
+  }
+}
+
+window.addEventListener('pageshow', forceRestoreUI);
+window.addEventListener('popstate', forceRestoreUI);
 </script>
 </body>
 </html>
