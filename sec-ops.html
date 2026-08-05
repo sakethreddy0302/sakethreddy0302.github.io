@@ -226,21 +226,29 @@
         .status-node {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.6rem;
         }
 
-        .blink-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--green-glow);
-            border-radius: 50%;
-            box-shadow: 0 0 8px var(--green-glow);
-            animation: blink 1s infinite;
+        /* DIRECT ASTERISK STYLING */
+        .asterisk-icon {
+            color: var(--green-glow);
+            font-size: 1.3rem;
+            font-weight: 900;
+            line-height: 1;
+            display: inline-block;
+            text-shadow: 0 0 8px var(--green-glow), 0 0 12px var(--green-glow);
+            animation: pulse-asterisk 1.2s infinite ease-in-out;
         }
 
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.2; }
+        @keyframes pulse-asterisk {
+            0%, 100% { 
+                opacity: 1; 
+                transform: scale(1);
+            }
+            50% { 
+                opacity: 0.25; 
+                transform: scale(0.85);
+            }
         }
 
         /* --- NAVIGATION --- */
@@ -490,7 +498,7 @@
 
             <div class="input-group">
                 <label for="password">&gt; PASSWORD:</label>
-                <input type="password" id="password" placeholder="••••••••" required>
+                <input type="password" id="password" placeholder="********" required>
                 <div class="pwd-hint">[* HINT: password ]</div>
             </div>
 
@@ -503,10 +511,10 @@
 <!-- MAIN CONTENT CONTAINER -->
 <div class="container">
 
-    <!-- STATUS BAR WITH REAL-TIME PING & CPU WIDGETS -->
+    <!-- STATUS BAR WITH EXPLICIT ASTERISK ICON -->
     <div class="sys-status-bar">
         <div class="status-node">
-            <div class="blink-dot"></div>
+            <span class="asterisk-icon">*</span>
             <span>SYS_STATUS: OPERATIONAL</span>
         </div>
         <div>IP: 127.0.0.1 [ENCRYPTED]</div>
@@ -554,12 +562,12 @@
     <!-- PROJECTS & LABS SECTION -->
     <section id="payloads">
         <div class="ascii-art">
-   _____ ______ _____   _    _ _____  _____ _______驰  _        _    _____   _____ 
-  / ____|  ____/ ____| | |  | |  __ \|_   _|__   __/ |  | |      / \  |  _ \ / ____|
- | (___ | |__ | |      | |  | | |__) | | |    | |  | |  | |     / _ \ | |_) | (___  
-  \___ \|  __|| |      | |  | |  _  /  | |    | |  | |  | |    / ___ \|  _ < \___ \ 
-  ____) | |___| |____  | |__| | | \ \ _| |_   | |  | |__| |___/ /   \ \ |_) |____) |
- |_____/|______\_____|  \____/|_|  \_\_____|  |_|  |____|______/_/     \_\____/|_____/ 
+   _____ ______ _____   _    _ _____  _____ ________ _     _  _        _   _____   _____ 
+  / ____|  ____/ ____| | |  | |  __ \|_   _|__   __/ \\___// | |      / \  |  _ \ / ____|
+ | (___ | |__ | |      | |  | | |__) | | |    | |      | |   | |     / _ \ | |_) | (___  
+  \___ \|  __|| |      | |  | |  _  /  | |    | |      | |   | |    / ___ \|  _ < \___ \ 
+  ____) | |___| |____  | |__| | | \ \ _| |_   | |      | |   | |___/ /   \ \ |_) |____) |
+ |_____/|______\_____|  \____/|_|  \_\_____|  |_|      |_|   |______/     \_\____/|_____/ 
         </div>
         <h2 class="sec-title glitch-text" data-text="01. SECURITY_LABS & PROTOCOL_ANALYSIS">01. SECURITY_LABS &amp; PROTOCOL_ANALYSIS</h2>
         <div class="grid">
